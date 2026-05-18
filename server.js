@@ -1,10 +1,10 @@
-//Projeto básico de rotas - backend com node js
+// Projeto básico de rotas - backend com node js
 
 const express = require("express");
 const app = express();
 app.use(express.json());
 
-//banco de dados fake
+// banco de dados fake
 
 let usuarios = [
     {id: 1, nome: "João", email:"joao@gmail.com"},
@@ -12,17 +12,17 @@ let usuarios = [
     {id: 2, nome: "Carlinhos", email:"carlinhos@gmail.com"},
 ];
 
-//get - Pag inicial
+// get - Pag inicial
 app.get("/", (req, res) =>{
     res.send("Servidor funcionando com sucesso!");
 });
 
-//get - Lista de usuários
+// get - Lista de usuários
 app.get("/usuarios", (req, res) => {
     res.json(usuarios);
 });
 
-//get com parâmetro ("filtro")
+// get com parâmetro ("filtro")
 app.get("usuario/:id", (req, res) => {
     const id = Number(req.params.id);
 
@@ -36,7 +36,7 @@ app.get("usuario/:id", (req, res) => {
     res.json(usuario);
 });
 
-//post - cadastrar usuário
+// post - cadastrar usuário
 app.post("/cadastro", (req, res) => {
     const {nome, email} = req.body;
 
@@ -59,7 +59,7 @@ app.post("/cadastro", (req, res) => {
     });
 });
 
-//Put - editar usuário
+// Put - editar usuário
 app.put("/editar/:id", (res, req) => {
     const id = Number(req.params.id);
     const {nome, email} = req.body;
@@ -75,7 +75,7 @@ app.put("/editar/:id", (res, req) => {
     });
 });
 
-//Delete - deletar usuário
+// Delete - deletar usuário
 
 app.delete("deletar/:id", (req, res) => {
     const id = Number(req.params.id);
@@ -86,4 +86,23 @@ app.delete("deletar/:id", (req, res) => {
         });
     }
     
+    if(nome) usuario.nome = nome;
+    if(email) usuario.email = email;
+
+    res.json({
+        mensagem: "Usuário atualizado com sucesso!"
+    });
+
+    const usuarioRemovido = usuarios.splice(index, 1);
+
+    res.json({
+        mensagem: usuarioRemovido[0]
+    });
+});
+
+// Servidor
+const PORT = 3000;
+
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http.localhost:${PORT}`);
 });
