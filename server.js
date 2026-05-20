@@ -23,7 +23,7 @@ app.get("/usuarios", (req, res) => {
 });
 
 // get com parâmetro ("filtro")
-app.get("usuario/:id", (req, res) => {
+app.get("/usuario/:id", (req, res) => {
     const id = Number(req.params.id);
 
     const usuario = usuarios.find(u => u.id === id);
@@ -69,6 +69,10 @@ app.put("/editar/:id", (res, req) => {
             mensagem: "Usuário não encontrado"
         });
     }
+
+    if(nome) usuario.nome = nome;
+    if (email) usuario.email = email;
+
     res.json({
         mensagem: "Usuário atualizado com sucesso!",
         usuario
