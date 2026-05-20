@@ -60,9 +60,9 @@ app.post("/cadastro", (req, res) => {
 });
 
 // Put - editar usuário
-app.put("/editar/:id", (res, req) => {
+app.put("/editar/:id", (req, res) => {
     const id = Number(req.params.id);
-    const {nome, email} = req.body;
+    const { nome, email } = req.body;
     const usuario = usuarios.find(u => u.id === id);
     if(!usuario){
         return res.status(404).json({
@@ -81,7 +81,7 @@ app.put("/editar/:id", (res, req) => {
 
 // Delete - deletar usuário
 
-app.delete("deletar/:id", (req, res) => {
+app.delete("/deletar/:id", (req, res) => {
     const id = Number(req.params.id);
     const index = usuarios.findIndex(u => u.id === id);
     if(index === -1){
@@ -89,18 +89,12 @@ app.delete("deletar/:id", (req, res) => {
             mensagem: "Usuário não encontrado"
         });
     }
-    
-    if(nome) usuario.nome = nome;
-    if(email) usuario.email = email;
-
-    res.json({
-        mensagem: "Usuário atualizado com sucesso!"
-    });
 
     const usuarioRemovido = usuarios.splice(index, 1);
 
     res.json({
-        mensagem: usuarioRemovido[0]
+        mensagem: "Usuário deletado com sucesso!",
+        usuario: usuarioRemovido[0]
     });
 });
 
